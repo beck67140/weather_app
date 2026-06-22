@@ -137,9 +137,11 @@ function formatLocalDate(timestamp, timezoneOffset) {
 function formatLocalTime(timestamp, timezoneOffset) {
     if (timestamp == null || timezoneOffset == null) return 'N/A';
     const localTime = new Date((timestamp + timezoneOffset) * 1000);
-    const hour = String(localTime.getUTCHours()).padStart(2, '0');
+    let hour = localTime.getUTCHours();
     const minute = String(localTime.getUTCMinutes()).padStart(2, '0');
-    return `${hour}:${minute}`;
+    const period = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12 || 12;
+    return `${hour}:${minute} ${period}`;
 }
 
 function capitalize(text) {
